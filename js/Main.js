@@ -1,16 +1,20 @@
 'use strict';
 
-function MainCtrl($scope, $http) {
+function MainCtrl($rootScope, $scope, $http) {
     $scope.fetchError = false;
-    $scope.restUrl = "http://54.235.223.169";
+    $scope.restUrl = "http://ec2-23-22-13-188.compute-1.amazonaws.com/Search";
     $scope.imageUrl = "http://ec2-23-20-80-89.compute-1.amazonaws.com:8080/BlitzDataWebService/images/";
     $scope.selectedFacets = {};
     
     mockData($scope);
     initTeamData($scope);
 
-    $scope.fetch = function() {    
-        var params = {q: $scope.query};
+    for (var item in $scope.items){
+        $scope.items[item]['text'] = $scope.processWikiText($scope.items[item]['text']);
+    }
+
+    $rootScope.fetch = function() {   
+        var params = {q: $rootScope.q};
 
         for(var selectedFacet in $scope.selectedFacets) {
             if($scope.selectedFacets[selectedFacet] && $scope.selectedFacets[selectedFacet].length > 0) {
@@ -18,14 +22,15 @@ function MainCtrl($scope, $http) {
             }
         }
 
-        console.log(params);
-
         $http({
             method: 'GET',         
             url: $scope.restUrl,
             params: params
         }).success(function(data, status, headers, config) {
-            $scope.fetchError = false;
+            $scope.fetchError = false;         
+            console.log(data);
+
+
             // TODO: Penser aux updates de facets sélectées
             // TODO: plug data
         }).error(function(data, status, headers, config) {           
@@ -52,7 +57,7 @@ function MainCtrl($scope, $http) {
         }
 
         $scope.selectedFacets[name] = values;
-        $scope.fetch();
+        $rootScope.fetch();
     }
 
     $scope.getFacetName = function(name) {
@@ -67,7 +72,30 @@ function MainCtrl($scope, $http) {
         };
 
         return (prettyNames[name]) ? prettyNames[name] : name;
-    };    
+    };  
+
+    $scope.processWikiText = function(text) {
+        // Blod + italic
+        var pattern = /'''''.+'''''/gi;
+        var matches = text.match(pattern);
+        for(var match in matches) {
+            text = text.replace(matches[match], "<strong><i>" + matches[match].replace(/'/g, "") + "</i></strong>");
+        }
+        // Bold
+        pattern = /'''.+'''/gi;
+        matches = text.match(pattern);
+        for(var match in matches) {
+            text = text.replace(matches[match], "<strong>" + matches[match].replace(/'/g, "") + "</strong>");
+        }
+        // Italic
+        pattern = /''.+''/gi;
+        matches = text.match(pattern);
+        for(var match in matches) {
+            text = text.replace(matches[match], "<i>" + matches[match].replace(/'/g, "") + "</i>");
+        }
+
+        return text;
+    }  
 }
 
 function mockData($scope) {
@@ -87,20 +115,21 @@ function mockData($scope) {
         }
     };
 
-    $scope.items = [{
+    /*$scope.items = [{
         "id": "011_x9",
-        "name": "Joe Hahn Halendro Helfote",
+        "name": ["Joe Hahn Halendro Helfote"],
+        "type": ["artists"],
         "origin": "Los Angeles",
         "genres": ["Electronica", "Rapcore"],
         "labels": ["Warner Bros. Record"],
         "group_names": ["Linkin Park", "Xero"],
-        "instrument_played": ["Keyboard", "Sampler"],
-        "text": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis."
+        "instruments_played": ["Keyboard", "Sampler"],
+        "text": "'''''Joseph \"Joe\" Hahn''''' (born March 15, 1977), also known by his ''stage'' '''name''', '''Mr. Hahn''', is an American turntablist and director best known as the DJ and sampler for the American rock band Linkin Park."
     }];
 
     for(var i=0; i<9;i++){
         $scope.items[i] = $scope.items[0];
-    }
+    }*/
 }
 
 function initTeamData($scope) {

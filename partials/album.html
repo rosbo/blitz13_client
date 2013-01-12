@@ -1,0 +1,30 @@
+<ul class="breadcrumb">
+    <li><a href="#">Accueil</a> <span class="divider">/</span></li>
+    <li class="active">Albums <span class="divider">/</span></li>
+    <li class="active">{{item.name.0}}</li>
+</ul>
+<div class="well">
+    <div class="page-header">        
+        <h1>{{item.name.0}} <small><!-- Artist names --></small></h1>
+    </div>
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="thumbnail">
+                <img ng-src="{{imageUrl}}{{item.id}}" style="padding-right:20px;">
+            </div>
+        </div>
+        <div class="span9">
+            <h2>Chansons</h2>
+            <ul>
+                <li ng-repeat="track in item.track_names">{{track}}</li>
+            </ul>
+            <h2>Date de lancement</h2>
+            <p>{{item.release_date.0}}</p>
+            <h2>Labels</h2>
+            <ul class="inline">
+                <li ng-repeat="label in item.labels">{{label}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

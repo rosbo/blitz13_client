@@ -1,6 +1,6 @@
-function ListCtrl($scope) {
-    $scope.hoverThumb = function($event) {
-        console.log(event);
-        console.log("hover");
-    }
+function ListCtrl($rootScope, $scope) {
+    $scope.search = function(){
+        $rootScope.q = $scope.query;
+        $rootScope.fetch();
+    }        
 }

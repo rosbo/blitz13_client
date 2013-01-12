@@ -1,0 +1,38 @@
+<ul class="breadcrumb">
+    <li><a href="#">Accueil</a> <span class="divider">/</span></li>
+    <li class="active">Artistes <span class="divider">/</span></li>
+    <li class="active">{{item.name.0}}</li>
+</ul>
+<div class="well">
+    <div class="page-header">
+        <h1>{{item.name.0}} <small>{{item.origin.0}}</small></h1>
+    </div>
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="thumbnail">
+                <img ng-src="{{imageUrl}}{{item.id}}" style="padding-right:20px;">
+            </div>
+        </div>
+        <div class="span9">
+            <h2>Genres</h2>
+            <ul class="inline">
+                <li ng-repeat="genre in item.genres">{{genre}}</li>
+            </ul>
+            <h2>Groupes</h2>
+            <ul class="inline">
+                <li ng-repeat="group in item.group_names">{{group}}</li>
+            </ul>
+            <h2>Instruments</h2>
+            <ul class="inline">
+                <li ng-repeat="instrument in item.instruments_played">{{instrument}}</li>
+            </ul>
+            <h2>Labels</h2>
+            <ul class="inline">
+                <li ng-repeat="label in item.labels">{{label}}</li>
+            </ul>
+            <h2>Description</h2>
+            <p>{{item.text}}</p>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

@@ -1,4 +1,8 @@
 <div class="well">
+    <form class="form-search">
+        <input type="text" class="input-xxlarge search-query" placeholder="Entrer les termes de votre recherche..." speech x-webkit-speech ng-model="query" ng-change="search()">
+        <button type="submit" class="btn" ng-click="search()">Search</button>
+    </form>
     <!--
     Inline style
     <div class="media" ng-repeat="item in items">
@@ -13,13 +17,13 @@
     <div class="row-fluid" id="items">
         <ul class="thumbnails">
             <li class="span4 item" ng-repeat="item in items" showonhoverparent>
-                <a href="#/detail/{{item.id}}" class="thumbnail">
+                <a href="#/{{item.type.0}}/{{item.id}}" class="thumbnail">
                     <img ng-src="{{imageUrl}}{{item.id}}" width="245">
                     <div class="slide">
                         <div class="caption">
-                            <h4>{{item.name}}</h4>
+                            <h4>{{item.name.0}}</h4>
                         </div>
-                        <p>{{item.text}}</p>
+                        <p ng-bind-html-unsafe="item.text"></p>
                     </div>                
                 </a>
             </li>

@@ -1,15 +1,29 @@
-function DetailCtrl($scope, $routeParams) {
+function ArtistCtrl($scope, $routeParams) {
     // TODO : Call server
     // $routeParams.id
 
     $scope.item = {
         "id": "011_x9",
-        "name": "Joe Hahn",
-        "origin": "Los Angeles",
+        "name": ["Joe Hahn"],
+        "origin": ["Los Angeles"],
         "genres": ["Electronica", "Rapcore"],
         "labels": ["Warner Bros. Record"],
         "group_names": ["Linkin Park", "Xero"],
-        "instrument_played": ["Keyboard", "Sampler"],
-        "text": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis."
+        "instruments_played": ["Keyboard", "Sampler"],
+        "text": "'''Joseph \"Joe\" Hahn''' (born March 15, 1977), also known by his stage name, '''Mr. Hahn''', is an American turntablist and director best known as the DJ and sampler for the American rock band Linkin Park."
+    };
+}
+
+function AlbumCtrl($scope, $routeParams) {
+    // TODO : Call server
+    // $routeParams.id
+
+    $scope.item = {
+        "id": "01hcg8p",
+        "name": ["Big Pimpin"],
+        "artists": ["011_x9"],
+        "release_date": ["2000-09-12"],
+        "labels": ["Warner Bros. Record"],
+        "track_names": ["Girls Best Friend", "Big Pimpin"],
     };
 }
