@@ -7,7 +7,8 @@ function MainCtrl($rootScope, $scope, $http) {
     $scope.imageUrl = "http://ec2-23-20-80-89.compute-1.amazonaws.com:8080/BlitzDataWebService/images/";
     $scope.selectedFacets = {};
     
-    mockData($scope);
+    mockFacets($scope)
+    //mockData($scope);
     initTeamData($scope);
 
     $rootScope.fetch = function() {   
@@ -140,7 +141,7 @@ function MainCtrl($rootScope, $scope, $http) {
     }  
 }
 
-function mockData($scope) {
+function mockFacets($scope) {
     $scope.facets = {
         "origin": {
             "Georgia": 1,
@@ -155,9 +156,12 @@ function mockData($scope) {
             "Pop rock": 1,
             "Indie rock": 1
         }
-    };
+    };    
+}
 
-    /*$scope.items = [{
+function mockData($scope) {
+
+    $scope.items = [{
         "id": "011_x9",
         "name": ["Joe Hahn Halendro Helfote"],
         "type": ["artists"],
@@ -171,7 +175,11 @@ function mockData($scope) {
 
     for(var i=0; i<9;i++){
         $scope.items[i] = $scope.items[0];
-    }*/
+    }
+
+    for(item in $scope.items){
+        //$scope.items[item].text = $scope.
+    }
 }
 
 function initTeamData($scope) {
