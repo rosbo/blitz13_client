@@ -1,0 +1,22 @@
+<div>
+    <div class="media" ng-repeat="item in items | filter:query">
+        <a href="#/detail/{{item.id}}" class="pull-left">
+            <img src="http://placehold.it/100x100">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">{{item.name}}</h4>
+            {{item.text}}
+        </div>
+    </div>
+</div>
+
+<div class="pagination" align="center">
+    <ul>
+        <li class="disabled"><a href="#">«</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">»</a></li>
+    </ul>
+</div>
