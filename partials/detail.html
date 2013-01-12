@@ -4,5 +4,13 @@
 </ul>
 <div class="well">
     <h1>{{item.name}}</h1>
-    <p>{{item.text}}</p>
+    <div class="row-fluid">
+        <span class="span3">
+            <div class="thumbnail">
+                <img ng-src="{{imageUrl}}{{item.id}}" style="padding-right:20px;">
+            </div>
+        </span>
+        <span class="span9">{{item.text}}</span>
+    </div>
+    <div class="clearfix"></div>
 </div>

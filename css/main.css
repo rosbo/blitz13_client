@@ -272,7 +272,53 @@ ul.nav-list li.active{
 	font-weight: bold;
 }
 
-ul.nav-list li{
-	line-height: 30px;
+ul.nav-list li a{
+	padding-left:25px;	
 }
 
+ul.nav-list li span.badge{
+	float: right;
+}
+
+li.item{
+	margin-bottom: 0;
+}
+
+li.item a{
+	position: relative;
+	overflow: hidden;
+	height: 210px;
+}
+
+li.item div.slide{	
+	position: absolute;
+	top: 180px;
+	background-color: #F2F2F2;
+}
+
+li.item a{	
+	color: #555555;
+}
+
+li.item h4{
+	margin-bottom: 0px;
+}
+
+li.item a:hover{	
+	text-decoration: none;
+	border-color: rgba(0, 0, 0, 0.05);
+	border-right-color: #888888;
+	border-bottom-color: #888888;
+
+}
+
+body {
+	/*background:url("../img/pattern-illusion.png");*/
+/*	background:url("../img/pattern-maze_white.png");
+*/	background:url("../img/pattern-linen.png");
+	background-repeat: repeat;
+}
+
+.row-fluid [class*="span"]:nth-child(3n+1){
+	margin-left: 0;
+}
