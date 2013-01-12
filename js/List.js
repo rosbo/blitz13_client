@@ -14,6 +14,4 @@ function ListCtrl($scope) {
     for(i=0; i<5;i++){
         $scope.items[i] = $scope.items[0];
     }
-
-    console.log($scope.query);
 }
