@@ -1,23 +1,12 @@
 <div class="well">
     <form class="form-search">
-        <input type="text" class="input-xxlarge search-query" placeholder="Entrer les termes de votre recherche..." speech x-webkit-speech ng-model="query" ng-change="search()">
+        <input type="text" class="input-xxlarge search-query" placeholder="Entrer les termes de votre recherche..." speech x-webkit-speech ng-model="query">
         <button type="submit" class="btn" ng-click="search()">Search</button>
     </form>
-    <!--
-    Inline style
-    <div class="media" ng-repeat="item in items">
-        <a href="#/detail/{{item.id}}" class="pull-left">
-            <img ng-src="{{imageUrl}}{{item.id}}">
-        </a>
-        <div class="media-body">
-            <h4 class="media-heading">{{item.name}}</h4>
-            {{item.text}}
-        </div>
-    </div>-->
     <div class="row-fluid" id="items">
         <ul class="thumbnails">
             <li class="span4 item" ng-repeat="item in items" showonhoverparent>
-                <a href="#/{{item.type.0}}/{{item.id}}" class="thumbnail">
+                <a href="#/{{item.type}}/{{item.id}}" class="thumbnail">
                     <img ng-src="{{imageUrl}}{{item.id}}" width="245">
                     <div class="slide">
                         <div class="caption">
@@ -29,8 +18,11 @@
             </li>
         </ul>
     </div>
-
+    <div class="well" style="text-align: center;" ng-show="isLoading">
+        <img src="img/ajax-loader.gif"> &nbsp;&nbsp;&nbsp;&nbsp;Chargement...
+    </div>
     <div class="alert alert-error" ng-show="fetchError"><strong>Merde!</strong> Erreur lors de la requête au serveur.</div>
+    <div class="alert alert-info" ng-show="items && items.length == 0">Aucun résultat.</div>
 
     <!--<div class="pagination" align="center">
         <ul>

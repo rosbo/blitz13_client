@@ -5,8 +5,8 @@
 angular.module('myApp', ['myApp.directives', 'myApp.filters']).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/list.html', controller: ListCtrl});
-        $routeProvider.when('/artists/:id', {templateUrl: 'partials/artist.html', controller: ArtistCtrl});
-        $routeProvider.when('/albums/:id', {templateUrl: 'partials/album.html', controller: AlbumCtrl});
+        $routeProvider.when('/artist/:id', {templateUrl: 'partials/artist.html', controller: ArtistCtrl});
+        $routeProvider.when('/album/:id', {templateUrl: 'partials/album.html', controller: AlbumCtrl});
         $routeProvider.otherwise({redirectTo: '/'});
     }])
     .config(function($httpProvider) {

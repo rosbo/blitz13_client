@@ -3,43 +3,85 @@
 function MainCtrl($rootScope, $scope, $http) {
     $scope.fetchError = false;
     $scope.restUrl = "http://ec2-23-22-13-188.compute-1.amazonaws.com/Search";
+    $scope.infoUrl = "http://ec2-23-22-13-188.compute-1.amazonaws.com/info";
     $scope.imageUrl = "http://ec2-23-20-80-89.compute-1.amazonaws.com:8080/BlitzDataWebService/images/";
     $scope.selectedFacets = {};
     
     mockData($scope);
     initTeamData($scope);
 
-    for (var item in $scope.items){
-        $scope.items[item]['text'] = $scope.processWikiText($scope.items[item]['text']);
+    $rootScope.fetch = function() {   
+        if($rootScope.q && $rootScope.q.length > 0){
+            var params = {q: $rootScope.q};
+
+            for(var selectedFacet in $scope.selectedFacets) {
+                if($scope.selectedFacets[selectedFacet] && $scope.selectedFacets[selectedFacet].length > 0) {
+                    params[selectedFacet] = $scope.selectedFacets[selectedFacet].join(" OR ");
+                }
+            }
+
+            $scope.isLoading = true;
+            $http({
+                method: 'GET',         
+                url: $scope.restUrl,
+                params: params
+            }).success(function(data, status, headers, config) {
+                $scope.fetchError = false;   
+                $scope.isLoading = false;             
+                $scope.items = [];
+
+                // TODO: Facets
+                //$scope.facets = data.facets;
+
+                // Fetch details
+                for(var i = 0; i<Math.min(9, data.results.length); i++) {
+                    var id = data.results[i].id;
+                    $scope.fetchInfo(id, function(item){                        
+                        $scope.items.push(item); 
+                    });
+                }
+                // TODO: Facets
+                // TODO: Penser aux updates de facets sélectées
+            }).error(function(data, status, headers, config) {           
+                $scope.fetchError = true;
+                $scope.isLoading = false;
+                $scope.items = [];
+                $scope.facets = {};            
+                $scope.selectedFacets = {};
+            });
+        }
     }
 
-    $rootScope.fetch = function() {   
-        var params = {q: $rootScope.q};
-
-        for(var selectedFacet in $scope.selectedFacets) {
-            if($scope.selectedFacets[selectedFacet] && $scope.selectedFacets[selectedFacet].length > 0) {
-                params[selectedFacet] = $scope.selectedFacets[selectedFacet].join(" OR ");
-            }
-        }
-
+    $scope.fetchInfo = function(id, callback){
+        console.log(id);
         $http({
-            method: 'GET',         
-            url: $scope.restUrl,
-            params: params
-        }).success(function(data, status, headers, config) {
-            $scope.fetchError = false;         
+            method: 'GET',
+            url: $scope.infoUrl,
+            params: {
+                'id': id
+            }
+        }).success(function(data, status, headers, config){
+            console.log("fetchinfo su");
             console.log(data);
-
-
-            // TODO: Penser aux updates de facets sélectées
-            // TODO: plug data
-        }).error(function(data, status, headers, config) {           
-            $scope.fetchError = true;
-            $scope.items = [];
-            $scope.facets = {};            
-            $scope.selectedFacets = {};
+            if(data.success){
+                var item = $.parseJSON(data.result);
+                item['type'] = data.type;
+                if(item['text']){
+                    item['ftext'] = item['text'];
+                    item['text'] = item['text'].substring(0, 100)+"...";
+                    item['ftext'] = $scope.processWikiText(item['ftext']);
+                    item['text']= $scope.processWikiText(item['text']);
+                }
+                console.log(item);
+                callback(item);         
+            }
+            //$scope.items.push()
+        }).error(function(data, status, headers, config) {
+            console.log("Erreur fetch info: "+id);
         });
     }
+
+
 
     $scope.selectFacet = function(name, value) {
         var values = $scope.selectedFacets[name];
