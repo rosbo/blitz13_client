@@ -268,5 +268,11 @@ body .one .bsa_it_p {
 }
 
 /* -------------- My styles -------------- */
+ul.nav-list li.active{
+	font-weight: bold;
+}
 
+ul.nav-list li{
+	line-height: 30px;
+}
 
